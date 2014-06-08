@@ -1,3 +1,11 @@
+#ifndef STATIC_LINK
+#define IMPLEMENT_API
+#endif
+
+#if defined(HX_WINDOWS) || defined(HX_MACOS) || defined(HX_LINUX)
+#define NEKO_COMPATIBLE
+#endif
+
 #include <hx/CFFI.h>
 
 #include "AD.h"
@@ -6,6 +14,7 @@ using namespace admobIOS;
 
 
 extern "C" void admob_main() {
+	val_int(0); // Fix Neko init
 }
 DEFINE_ENTRY_POINT(admob_main);
 
@@ -13,6 +22,7 @@ extern "C" int admob_register_prims() {
 	return 0;
 }
 
+#ifdef IPHONE
 
 value admob_ad_init(value id, value x, value y, value size, value testMode) {
 	initAd(val_string(id), val_int(x), val_int(y), val_int(size), val_bool(testMode));
@@ -49,3 +59,5 @@ value admob_ad_show_interstitial() {
 	return alloc_null();
 }
 DEFINE_PRIM(admob_ad_show_interstitial, 0);
+
+#endif

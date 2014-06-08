@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-<ndll name="admob" if="ios" />
-<dependency name="AdSupport.framework" if="ios" />
-<dependency name="CoreTelephony.framework" if="ios" />
-<dependency name="MessageUI.framework" if="ios" />
-<dependency name="StoreKit.framework" if="ios" />
-<dependency name="SystemConfiguration.framework" if="ios" />
+	<ndll name="admob"/>
+
+	<section if="ios">				
+		<dependency name="AdSupport.framework"/>
+		<dependency name="CoreTelephony.framework"/>
+		<dependency name="MessageUI.framework"/>
+		<dependency name="StoreKit.framework"/>
+		<dependency name="SystemConfiguration.framework"/>
+	</section>
+	
+	<section if="android">
+		<dependency name="admob" path="dependencies/android"/>
+		<android extension="org.haxe.extension.Admob" />			
+		<template path="dependencies/android/src/org/haxe/extension/util/google-play-services.jar" rename="deps/admob/libs/google-play-services.jar"/>	
+	</section>
 </project>
