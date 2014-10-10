@@ -1,7 +1,5 @@
 package admob;
 
-import flash.Lib;
-
 class AD {
 	public static var LEFT : Int = 0;
 	public static var RIGHT : Int = 1;
@@ -27,6 +25,7 @@ class AD {
 	private static var _showAd_func : Dynamic;
 	private static var _initInterstitial_func : Dynamic;
 	private static var _showInterstitial_func : Dynamic;
+	private static var _setTestDevice_func : Dynamic;
 
 	
 	public static function init(id : String, x : Int = 0, y : Int = 0, size : Int = 0, test : Bool = false) {
@@ -38,7 +37,7 @@ class AD {
 		
 		// call API
 		if (_initAd_func == null) {
-			_initAd_func = openfl.utils.JNI.createStaticMethod("org.haxe.lime.GameActivity", "initAd",
+			_initAd_func = openfl.utils.JNI.createStaticMethod("org.haxe.extension.Admob", "initAd",
 				"(Ljava/lang/String;IIZ)V", true);
 		}
 
@@ -52,7 +51,7 @@ class AD {
 
 	public static function show() : Void {
 		if (_showAd_func == null) {
-			_showAd_func = openfl.utils.JNI.createStaticMethod("org.haxe.lime.GameActivity", "showAd", "()V", true);
+			_showAd_func = openfl.utils.JNI.createStaticMethod("org.haxe.extension.Admob", "showAd", "()V", true);
 		}
 		
 		_showAd_func(new Array<Dynamic>());
@@ -60,7 +59,7 @@ class AD {
 	
 	public static function hide() : Void {
 		if (_hideAd_func == null) {
-			_hideAd_func = openfl.utils.JNI.createStaticMethod("org.haxe.lime.GameActivity", "hideAd", "()V", true);
+			_hideAd_func = openfl.utils.JNI.createStaticMethod("org.haxe.extension.Admob", "hideAd", "()V", true);
 		}
 		
 		_hideAd_func(new Array<Dynamic>());
@@ -76,7 +75,7 @@ class AD {
 		// call API
 		if (_initInterstitial_func == null) {
 			_initInterstitial_func = openfl.utils.JNI.createStaticMethod(
-				"org.haxe.lime.GameActivity", "initInterstitial", "(Ljava/lang/String;Z)V", true
+				"org.haxe.extension.Admob", "initInterstitial", "(Ljava/lang/String;Z)V", true
 			);
 		}
 
@@ -89,11 +88,18 @@ class AD {
 	public static function showInterstitial() : Void {
 		if (_showInterstitial_func == null) {
 			_showInterstitial_func = openfl.utils.JNI.createStaticMethod(
-				"org.haxe.lime.GameActivity", "showInterstitial", "()V", true
+				"org.haxe.extension.Admob", "showInterstitial", "()V", true
 			);
 		}
 
 		_showInterstitial_func(new Array<Dynamic>());
+	}
+	
+	public static function setTestDevice(deviceHash : String) {
+		if (_setTestDevice_func == null) 
+			_setTestDevice_func = openfl.utils.JNI.createStaticMethod(
+				"org.haxe.extension.Admob", "setTestDevice", "(Ljava/lang/String;)V");
+		_setTestDevice_func(deviceHash);
 	}
 	
 #elseif ios

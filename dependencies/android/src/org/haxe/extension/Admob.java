@@ -1,5 +1,6 @@
 package org.haxe.extension;
 
+import java.security.MessageDigest;
 
 import android.app.Activity;
 import android.content.res.AssetManager;
@@ -7,14 +8,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.View;
 
 ////////////////////////////////////////////////////////////////////////
+import android.webkit.WebView.FindListener;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.graphics.Color;
 import com.google.android.gms.ads.*;
+import com.google.android.gms.ads.AdRequest.Builder;
 ////////////////////////////////////////////////////////////////////////
 
 /* 
@@ -52,6 +57,7 @@ public class Admob extends Extension {
 	static AdView adView;
 	static Boolean adVisible = false, adInitialized = false, adTestMode = false;
 	static InterstitialAd interstitial;
+	static String deviceHash;
 	////////////////////////////////////////////////////////////////////////	
 	
 	public static int sampleMethod (int inputValue) {
@@ -77,14 +83,19 @@ public class Admob extends Extension {
 	 * Called when the activity is starting.
 	 */
 	public void onCreate (Bundle savedInstanceState) {
+		adLayout = new RelativeLayout(mainActivity);
+		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
 		
+		mainActivity.addContentView(adLayout, adMobLayoutParams);
+		
+		//RelativeLayout layout = new RelativeLayout(mainActivity);
 		/*adView = new AdView(this, AdSize.BANNER, "a153939658c6a60");        
 		RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);        
 		layout.addView(adView);
 		AdRequest request = new AdRequest();
 		request.setTesting(false);
 		adView.loadAd(request);	*/	
-		int x = 2;
+		/*int x = 2;
 		int y = 0;
 		
 		
@@ -94,7 +105,6 @@ public class Admob extends Extension {
 		adView.setAdSize(AdSize.SMART_BANNER);
 
 		loadAd();
-		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
 
 		if(x == 0) {
 			adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -114,7 +124,7 @@ public class Admob extends Extension {
 		}
 		else if(y == 2) {
 			adMobLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-		}
+		}*/
 		
 	}
 	
@@ -191,22 +201,34 @@ public class Admob extends Extension {
 	
 	////////////////////////////////////////////////////////////////////////
 	static public void loadAd() {
-		AdRequest adRequest = new AdRequest.Builder().build();
-		adView.loadAd(adRequest);
+		try {
+			AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+			
+			if(adTestMode){	
+				adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+				adRequestBuilder.addTestDevice(deviceHash);
+			}
+			
+			AdRequest adRequest = adRequestBuilder.build();
+			Log.i("trace", "IS TEST : " + adRequest.isTestDevice(mainContext));
+		
+			adView.loadAd(adRequest);
+		}catch(Exception e){
+			Log.i("trace",e.getMessage());
+		}
 	}
 	
 	static public void initAd(final String id, final int x, final int y, final boolean testMode) {
-		/*Extension.mainActivity.runOnUiThread(new Runnable() {
+		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				String adID = id;
 				adTestMode = testMode;
 				
-				if (Extension.mainActivity == null) {
+				if (mainActivity == null) {
 					return;
 				}
 
-				adView = new AdView(Extension.mainActivity);
-				adView.setAdUnitId(adID);
+				adView = new AdView(mainActivity);
 				adView.setAdSize(AdSize.SMART_BANNER);
 
 				loadAd();
@@ -234,11 +256,11 @@ public class Admob extends Extension {
 				
 				adInitialized = true;
 			}
-		});*/
+		});
 	}
 	
 	static public void showAd() {
-		/*Extension.mainActivity.runOnUiThread(new Runnable() {
+		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				if (adInitialized && !adVisible) {
 					adLayout.removeAllViews();
@@ -248,7 +270,7 @@ public class Admob extends Extension {
 					adVisible = true;
 				}
 			}
-		});*/
+		});
 	}
         
 	static public void hideAd() {
@@ -264,18 +286,24 @@ public class Admob extends Extension {
 	}
 	
 	static public void loadInterstitial() {
-		AdRequest adRequest = new AdRequest.Builder().build();
+		AdRequest.Builder adRequestBuilder = new AdRequest.Builder();
+		if(adTestMode){	
+			adRequestBuilder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+			adRequestBuilder.addTestDevice(deviceHash);
+		}
+		AdRequest adRequest = adRequestBuilder.build();
 		interstitial.loadAd(adRequest);
 	}
 	
 	static public void initInterstitial(final String id, final boolean testMode) {
         Extension.mainActivity.runOnUiThread(new Runnable() {
             public void run() {
+            	adTestMode = testMode;
 				if (Extension.mainActivity == null) {
 					return;
 				}
 				
-                interstitial = new InterstitialAd(Extension.mainActivity);
+                interstitial = new InterstitialAd(mainActivity);
                 interstitial.setAdUnitId(id);
 
                 loadInterstitial();
@@ -291,6 +319,10 @@ public class Admob extends Extension {
                 }
             }
         });
+    }
+    
+    static public void setTestDevice(String hash) {
+    	deviceHash = hash;
     }
 	///////////////////////////////////////////////////////////////////////////////////////////	
 }
