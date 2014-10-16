@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 ////////////////////////////////////////////////////////////////////////
 import android.webkit.WebView.FindListener;
@@ -83,49 +84,10 @@ public class Admob extends Extension {
 	 * Called when the activity is starting.
 	 */
 	public void onCreate (Bundle savedInstanceState) {
-		adLayout = new RelativeLayout(mainActivity);
+		
+		adLayout = new RelativeLayout(mainContext);
 		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
-		
 		mainActivity.addContentView(adLayout, adMobLayoutParams);
-		
-		//RelativeLayout layout = new RelativeLayout(mainActivity);
-		/*adView = new AdView(this, AdSize.BANNER, "a153939658c6a60");        
-		RelativeLayout layout = (RelativeLayout)findViewById(R.id.ad);        
-		layout.addView(adView);
-		AdRequest request = new AdRequest();
-		request.setTesting(false);
-		adView.loadAd(request);	*/	
-		/*int x = 2;
-		int y = 0;
-		
-		
-		adView = new AdView(Extension.mainActivity);
-		//adView.setAdUnitId(adID);
-		adView.setAdUnitId("a153939658c6a60");
-		adView.setAdSize(AdSize.SMART_BANNER);
-
-		loadAd();
-
-		if(x == 0) {
-			adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		}
-		else if(x == 1) {
-			adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-		}
-		else if(x == 2) {
-			adMobLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-		}
-		
-		if(y == 0) {
-			adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-		}
-		else if(y == 1) {
-			adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-		}
-		else if(y == 2) {
-			adMobLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-		}*/
-		
 	}
 	
 	
@@ -149,6 +111,7 @@ public class Admob extends Extension {
 			adView.pause();
 		}		
 		
+		
 	}
 	
 	
@@ -168,11 +131,9 @@ public class Admob extends Extension {
 	 * to start interacting with the user.
 	 */
 	public void onResume () {
-		
 		if (adView != null) {
 			adView.resume();
 		}		
-		
 	}
 	
 	
@@ -214,12 +175,12 @@ public class Admob extends Extension {
 		
 			adView.loadAd(adRequest);
 		}catch(Exception e){
-			Log.i("trace",e.getMessage());
+			Log.i("trace","Error loadAd: " + e.getMessage());
 		}
 	}
 	
 	static public void initAd(final String id, final int x, final int y, final boolean testMode) {
-		Extension.mainActivity.runOnUiThread(new Runnable() {
+		mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				String adID = id;
 				adTestMode = testMode;
@@ -229,9 +190,10 @@ public class Admob extends Extension {
 				}
 
 				adView = new AdView(mainActivity);
+				adView.setAdUnitId(id);
 				adView.setAdSize(AdSize.SMART_BANNER);
-
 				loadAd();
+
 				adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
        
                 if(x == 0) {
@@ -260,21 +222,31 @@ public class Admob extends Extension {
 	}
 	
 	static public void showAd() {
-		Extension.mainActivity.runOnUiThread(new Runnable() {
+		mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				if (adInitialized && !adVisible) {
-					adLayout.removeAllViews();
-					adView.setBackgroundColor(Color.BLACK);
-					adLayout.addView(adView, adMobLayoutParams);
-					adView.setBackgroundColor(0);
-					adVisible = true;
+				try {
+					if (adInitialized && !adVisible) {
+						adLayout.removeAllViews();
+						adView.setBackgroundColor(Color.BLACK);
+						adLayout.addView(adView, adMobLayoutParams);
+						adView.setBackgroundColor(0);
+						adVisible = true;
+					}
+				} catch (Exception e){
+					if(adView == null)
+						Log.i("trace","adView null");
+					if(adLayout == null) 
+						Log.i("trace","adLayout null");
+					if(adMobLayoutParams == null)
+						Log.i("trace","admoblayoutparam null");
+					Log.i("trace","Error showAd: " + e.getMessage());
 				}
 			}
 		});
 	}
         
 	static public void hideAd() {
-		Extension.mainActivity.runOnUiThread(new Runnable() {
+		mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				if (adInitialized && adVisible) {
 					adLayout.removeAllViews();
@@ -296,7 +268,7 @@ public class Admob extends Extension {
 	}
 	
 	static public void initInterstitial(final String id, final boolean testMode) {
-        Extension.mainActivity.runOnUiThread(new Runnable() {
+        mainActivity.runOnUiThread(new Runnable() {
             public void run() {
             	adTestMode = testMode;
 				if (Extension.mainActivity == null) {
@@ -312,7 +284,7 @@ public class Admob extends Extension {
     }
 
     static public void showInterstitial() {
-        Extension.mainActivity.runOnUiThread(new Runnable() {
+        mainActivity.runOnUiThread(new Runnable() {
             public void run() {
                 if (interstitial.isLoaded()) {
                     interstitial.show();
