@@ -2,7 +2,7 @@ Google AdMob extension for OpenFL applications. Working on both Android and iOS.
 
 **Instructions**
 
-1. Clone this repo using ```haxelib git admob https://github.com/mkorman9/admob-openfl``` command
+1. Clone this repo using ```haxelib git admob https://github.com/TBaudon/admob-openfl``` command
 2. Include extension to your project ```<haxelib name="admob" /> ```
 3. Import AD class ```import admob.AD; ```
 4. Setup ads at the beginning of your code ```AD.init(ADMOB_ID, AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false);```
@@ -14,6 +14,7 @@ where arguments are following:
   - Test mode. Whether enable test ads or not. Default value is false.
 5. Show banner ```AD.show(); ```
 6. You can hide it anytime by calling ```AD.hide();```
+7. Use AD.setTestDevice("YOUR_DEVICE_HASH") if you want to use test ad on android devices (plus setting testMode to true in init functions)
 
 **Prerequisites on iOS**
 
@@ -32,14 +33,4 @@ haxelib run hxcpp Build.xml -Diphoneos
 haxelib run hxcpp Build.xml -Diphoneos -DHXCPP_ARMV7
 haxelib run hxcpp Build.xml -Diphonesim
 haxelib run hxcpp Build.xml
-```
-
-**Prerequisites on Android**
-
-1. Copy android-template directory to your project
-2. Add following code to your project.xml: 
-```xml
-<java path="android-template/libs/google-play-services.jar" if="android" />
-<template path="android-template/AndroidManifest.xml" rename="AndroidManifest.xml" if="android" />
-<template path="android-template/src/org/haxe/lime/GameActivity.java" rename="src/org/haxe/lime/GameActivity.java" if="android" />
 ```
