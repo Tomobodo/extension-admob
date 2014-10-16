@@ -59,6 +59,7 @@ public class Admob extends Extension {
 	static Boolean adVisible = false, adInitialized = false, adTestMode = false;
 	static InterstitialAd interstitial;
 	static String deviceHash;
+	static Boolean adLayoutAdded = false;
 	////////////////////////////////////////////////////////////////////////	
 	
 	/**
@@ -70,17 +71,19 @@ public class Admob extends Extension {
 		return true;
 	}
 	
+	public Admob(){
+		super();
+		adLayout = new RelativeLayout(mainActivity);
+		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
+		mainActivity.addContentView(adLayout, adMobLayoutParams);
+		adLayoutAdded = true;
+	}
+	
 	
 	/**
 	 * Called when the activity is starting.
 	 */
 	public void onCreate (Bundle savedInstanceState) {
-		Log.i("trace", "OOOOOOOH");
-		
-		Log.i("trace","CREATE");
-		adLayout = new RelativeLayout(mainContext);
-		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
-		mainActivity.addContentView(adLayout, adMobLayoutParams);
 	}
 	
 	
@@ -99,12 +102,15 @@ public class Admob extends Extension {
 	 * the background, but has not (yet) been killed.
 	 */
 	public void onPause () {
-		
 		if (adView != null) {
 			adView.pause();
 		}		
 		
-		
+		if(adLayoutAdded){
+			adLayoutAdded  = false;
+			ViewGroup vg = (ViewGroup)(adLayout.getParent());
+			vg.removeView(adLayout);
+		}
 	}
 	
 	
@@ -113,9 +119,7 @@ public class Admob extends Extension {
 	 * re-displayed to the user (the user has navigated back to it).
 	 */
 	public void onRestart () {
-		
-		
-		
+
 	}
 	
 	
@@ -124,9 +128,15 @@ public class Admob extends Extension {
 	 * to start interacting with the user.
 	 */
 	public void onResume () {
+		
+		if(!adLayoutAdded){
+			mainActivity.addContentView(adLayout, adMobLayoutParams);
+			adLayoutAdded = true;
+		}
+		
 		if (adView != null) {
 			adView.resume();
-		}		
+		}	
 	}
 	
 	
@@ -137,8 +147,6 @@ public class Admob extends Extension {
 	 */
 	public void onStart () {
 		
-		
-		
 	}
 	
 	
@@ -147,9 +155,6 @@ public class Admob extends Extension {
 	 * another activity has been resumed and is covering this one. 
 	 */
 	public void onStop () {
-		
-		
-		
 	}
 	
 	public void onSaveInstanceState (Bundle outState) {
@@ -239,12 +244,6 @@ public class Admob extends Extension {
 						adVisible = true;
 					}
 				} catch (Exception e){
-					if(adView == null)
-						Log.i("trace","adView null");
-					if(adLayout == null) 
-						Log.i("trace","adLayout null");
-					if(adMobLayoutParams == null)
-						Log.i("trace","admoblayoutparam null");
 					Log.i("trace","Error showAd: " + e.getMessage());
 				}
 			}
