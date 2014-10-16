@@ -6,6 +6,6 @@
 	"tags": ["openfl", "cpp", "android", "ios", "admob"],
 	"description": "Google AdMob extension for OpenFL",
 	"version": "1.1.0",
-	"contributors": [ "mkorman" ],
+	"contributors": [ "mkorman, tbaudon" ],
 	"dependencies": {}
 }

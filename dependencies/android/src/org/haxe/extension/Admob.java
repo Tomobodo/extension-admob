@@ -61,22 +61,13 @@ public class Admob extends Extension {
 	static String deviceHash;
 	////////////////////////////////////////////////////////////////////////	
 	
-	public static int sampleMethod (int inputValue) {
-		
-		return inputValue * 100;
-		
-	}
-	
-	
 	/**
 	 * Called when an activity you launched exits, giving you the requestCode 
 	 * you started it with, the resultCode it returned, and any additional data 
 	 * from it.
 	 */
 	public boolean onActivityResult (int requestCode, int resultCode, Intent data) {
-		
 		return true;
-		
 	}
 	
 	
@@ -84,7 +75,9 @@ public class Admob extends Extension {
 	 * Called when the activity is starting.
 	 */
 	public void onCreate (Bundle savedInstanceState) {
+		Log.i("trace", "OOOOOOOH");
 		
+		Log.i("trace","CREATE");
 		adLayout = new RelativeLayout(mainContext);
 		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
 		mainActivity.addContentView(adLayout, adMobLayoutParams);
@@ -159,6 +152,17 @@ public class Admob extends Extension {
 		
 	}
 	
+	public void onSaveInstanceState (Bundle outState) {
+
+	}
+
+	/**
+	 * Called after onStart() when the activity is being re-initialized from 
+	 * a previously saved state.
+	 */
+	public void onRestoreInstanceState (Bundle savedState) {
+
+	}
 	
 	////////////////////////////////////////////////////////////////////////
 	static public void loadAd() {
@@ -180,8 +184,10 @@ public class Admob extends Extension {
 	}
 	
 	static public void initAd(final String id, final int x, final int y, final boolean testMode) {
+		
 		mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
+				
 				String adID = id;
 				adTestMode = testMode;
 				
