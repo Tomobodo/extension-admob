@@ -1,6 +1,7 @@
 package admob;
 
 class AD {
+	// POSITIONS
 	public static var LEFT : Int = 0;
 	public static var RIGHT : Int = 1;
 	public static var CENTER : Int = 2;
@@ -38,13 +39,14 @@ class AD {
 		// call API
 		if (_initAd_func == null) {
 			_initAd_func = openfl.utils.JNI.createStaticMethod("org.haxe.extension.Admob", "initAd",
-				"(Ljava/lang/String;IIZ)V", true);
+				"(Ljava/lang/String;IIIZ)V", true);
 		}
 
 		var args = new Array<Dynamic>();
 		args.push(admobID);
 		args.push(originX);
 		args.push(originY);
+		args.push(size);
 		args.push(testMode);
 		_initAd_func(args);
 	}

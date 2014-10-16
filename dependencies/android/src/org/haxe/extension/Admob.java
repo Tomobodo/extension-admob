@@ -188,7 +188,7 @@ public class Admob extends Extension {
 		}
 	}
 	
-	static public void initAd(final String id, final int x, final int y, final boolean testMode) {
+	static public void initAd(final String id, final int x, final int y, final int size, final boolean testMode) {
 		
 		mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
@@ -200,9 +200,39 @@ public class Admob extends Extension {
 					return;
 				}
 
+				AdSize adsize;
+				
+				switch(size){
+				case 0 : 
+					adsize = AdSize.BANNER;
+					break;
+				case 1 :
+					adsize = AdSize.FULL_BANNER;
+					break;
+				case 2 :
+					adsize = AdSize.LARGE_BANNER;
+					break;
+				case 3 : 
+					adsize = AdSize.LEADERBOARD;
+					break;
+				case 4 :
+					adsize = AdSize.MEDIUM_RECTANGLE;
+					break;
+				case 5 :
+					adsize = AdSize.SMART_BANNER;
+					break;
+				case 6 :
+					adsize = AdSize.WIDE_SKYSCRAPER;
+					break;
+				default :
+					adsize = AdSize.SMART_BANNER;
+					break;
+				}
+				
+				
 				adView = new AdView(mainActivity);
 				adView.setAdUnitId(id);
-				adView.setAdSize(AdSize.SMART_BANNER);
+				adView.setAdSize(adsize);
 				loadAd();
 
 				adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
