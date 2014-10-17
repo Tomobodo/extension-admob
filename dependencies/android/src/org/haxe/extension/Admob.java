@@ -1,27 +1,20 @@
 package org.haxe.extension;
 
-import java.security.MessageDigest;
-
-import android.app.Activity;
-import android.content.res.AssetManager;
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-
-////////////////////////////////////////////////////////////////////////
-import android.webkit.WebView.FindListener;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
-import android.graphics.Color;
-import com.google.android.gms.ads.*;
-import com.google.android.gms.ads.AdRequest.Builder;
-////////////////////////////////////////////////////////////////////////
+
+import com.google.ads.mediation.inmobi.InMobiAdapter;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.InterstitialAd;
+import com.inmobi.commons.InMobi;
+import com.inmobi.commons.InMobi.LOG_LEVEL;
 
 /* 
 	You can use the Android Extension class in order to hook
@@ -330,6 +323,12 @@ public class Admob extends Extension {
     
     static public void setTestDevice(String hash) {
     	deviceHash = hash;
+    }
+    
+    static public void initInMobi(String propertyID){
+    	Log.i("trace","INITIALZING INMOBI");
+    	InMobi.initialize(mainActivity, propertyID);
+    	InMobi.setLogLevel(LOG_LEVEL.DEBUG);
     }
 	///////////////////////////////////////////////////////////////////////////////////////////	
 }
