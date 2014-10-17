@@ -11,7 +11,11 @@ where arguments are following:
   - Ad unit id.
   - Position in x axis. Could be ```AD.LEFT``` or ```AD.RIGHT```
   - Position in y axis. Could be ```AD.TOP``` or ```AD.BOTTOM```
-  - Banner size. Could be ```AdSize.BANNER_PORTRAIT``` or ```AdSize.BANNER_LANDSCAPE``` (see google's documentation)
+  - Banner size. Could be 
+      - ```AdSize.SMART_BANNER```
+      - ```AdSize.BANNER``` 
+      - ```AdSize.FULL_BANNER```
+      - ```AdSize.LARGE_BANNER```
   - Test mode. Whether enable test ads or not. Default value is false.
 6. Show banner ```AD.show(); ```
 7. You can hide it anytime by calling ```AD.hide();```
