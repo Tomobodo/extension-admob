@@ -2,19 +2,24 @@ Google AdMob extension for OpenFL applications. Working on both Android and iOS.
 
 **Instructions**
 
-1. Clone this repo using ```haxelib git admob https://github.com/TBaudon/admob-openfl``` command
-2. Include extension to your project ```<haxelib name="admob" /> ```
-3. Import AD class ```import admob.AD; ```
-4. Setup ads at the beginning of your code ```AD.init(ADMOB_ID, AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false);```
+1. Clone this repo using ```git clone admob https://github.com/TBaudon/admob-openfl``` command
+2. Use ```haxelib dev admob-openfl path/to/your/clone``` command to register the lib
+3. Include extension to your project ```<haxelib name="admob-openfl" /> ```
+4. Import AD class ```import admob.AD; ```
+5. Setup ads at the beginning of your code ```AD.init(ADMOB_ID, AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false);```
 where arguments are following:
   - Ad unit id.
   - Position in x axis. Could be ```AD.LEFT``` or ```AD.RIGHT```
   - Position in y axis. Could be ```AD.TOP``` or ```AD.BOTTOM```
   - Banner size. Could be ```AD.BANNER_PORTRAIT``` or ```AD.BANNER_LANDSCAPE``` (see google's documentation)
   - Test mode. Whether enable test ads or not. Default value is false.
-5. Show banner ```AD.show(); ```
-6. You can hide it anytime by calling ```AD.hide();```
-7. Use AD.setTestDevice("YOUR_DEVICE_HASH") if you want to use test ad on android devices (plus setting testMode to true in init functions)
+6. Show banner ```AD.show(); ```
+7. You can hide it anytime by calling ```AD.hide();```
+8. Use AD.setTestDevice("YOUR_DEVICE_HASH") if you want to use test ad on android devices (plus setting testMode to true in init functions)
+ 
+**Prerequisites on Android**
+
+You'll need to include [googleplay-openfl](https://github.com/TBaudon/googleplay-openfl) haxelib in your project BEFORE admob-openfl.
 
 **Prerequisites on iOS**
 
