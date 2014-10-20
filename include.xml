@@ -13,6 +13,5 @@
 	<section if="android">
 		<dependency name="admob" path="dependencies/android"/>
 		<config:android extension="org.haxe.extension.Admob" />	
-		<!--<template path="dependencies/android/src/org/haxe/extension/util/google-play-services.jar" rename="deps/admob/libs/google-play-services.jar"/>-->
 	</section>
 </project>

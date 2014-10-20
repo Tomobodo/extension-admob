@@ -292,6 +292,7 @@ public class Admob extends Extension {
 			adRequestBuilder.addTestDevice(deviceHash);
 		}
 		AdRequest adRequest = adRequestBuilder.build();
+		
 		interstitial.loadAd(adRequest);
 	}
 	
@@ -325,10 +326,14 @@ public class Admob extends Extension {
     	deviceHash = hash;
     }
     
-    static public void initInMobi(String propertyID){
-    	Log.i("trace","INITIALZING INMOBI");
-    	InMobi.initialize(mainActivity, propertyID);
-    	InMobi.setLogLevel(LOG_LEVEL.DEBUG);
+    static public void initInMobi(final String propertyID){
+    	Log.i("trace","INITIALIZING INMOBI");
+    	mainActivity.runOnUiThread( new Runnable() {
+    		public void run() {
+		    	InMobi.initialize(mainActivity, propertyID);
+		    	InMobi.setLogLevel(LOG_LEVEL.DEBUG);
+    		}
+    	});
     }
 	///////////////////////////////////////////////////////////////////////////////////////////	
 }
