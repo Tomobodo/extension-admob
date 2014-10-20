@@ -3,8 +3,8 @@ Google AdMob extension for OpenFL applications. Working on both Android and iOS.
 **Instructions**
 
 1. Clone this repo using ```git clone admob https://github.com/TBaudon/admob-openfl``` command
-2. Use ```haxelib dev admob-openfl path/to/your/clone``` command to register the lib
-3. Include extension to your project ```<haxelib name="admob-openfl" /> ```
+2. Use ```haxelib dev admob path/to/your/clone``` command to register the lib
+3. Include extension to your project ```<haxelib name="admob" /> ```
 4. Import AD class ```import admob.AD; ```
 5. Setup ads at the beginning of your code ```AD.init(ADMOB_ID, AD.LEFT, AD.BOTTOM, AD.BANNER_PORTRAIT, false);```
 where arguments are following:
@@ -23,7 +23,7 @@ where arguments are following:
  
 **Prerequisites on Android**
 
-You'll need to include [googleplay-openfl](https://github.com/TBaudon/googleplay-openfl) haxelib in your project BEFORE admob-openfl.
+You'll need to include [googleplay-openfl](https://github.com/TBaudon/google-play-services-openfl) haxelib in your project BEFORE admob-openfl.
 
 **Prerequisites on iOS**
 
