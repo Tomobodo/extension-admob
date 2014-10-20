@@ -23,7 +23,7 @@ where arguments are following:
  
 **Prerequisites on Android**
 
-You'll need to include [googleplay-openfl](https://github.com/TBaudon/google-play-services-openfl) haxelib in your project BEFORE admob-openfl.
+You'll need to include [google-play-services](https://github.com/TBaudon/google-play-services-openfl) haxelib in your project BEFORE admob-openfl.
 
 **Prerequisites on iOS**
 
