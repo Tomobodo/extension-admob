@@ -1,4 +1,6 @@
-Google AdMob extension for OpenFL applications. Working on both Android and iOS. Code is heavily based on NMEX extension which is pretty much outdated right now.
+Google AdMob extension for OpenFL applications. 
+Working on both Android and iOS (iOs is broken at the moment on this fork, will soon work on it). 
+Code is heavily based on NMEX extension which is pretty much outdated right now.
 
 **Instructions**
 
