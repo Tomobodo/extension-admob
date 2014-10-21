@@ -45,7 +45,7 @@ public class Admob extends Extension {
 	
 	////////////////////////////////////////////////////////////////////////
 	static RelativeLayout adLayout;
-	static RelativeLayout.LayoutParams adMobLayoutParams;
+	static RelativeLayout.LayoutParams adMobLayoutParams, adLayoutParam;
 	static AdView adView;
 	static Boolean adVisible = false, adInitialized = false, adTestMode = false;
 	static InterstitialAd interstitial;
@@ -65,7 +65,7 @@ public class Admob extends Extension {
 	public Admob(){
 		super();
 		adLayout = new RelativeLayout(mainActivity);
-		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
+		adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT); 
 		mainActivity.addContentView(adLayout, adMobLayoutParams);
 		adLayoutAdded = true;
 	}
@@ -225,27 +225,21 @@ public class Admob extends Extension {
 				adView.setAdSize(adsize);
 				loadAd();
 
-				adMobLayoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
+				adLayoutParam = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT); 
        
-                if(x == 0) {
-					adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-                }
-				else if(x == 1) {
-					adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-                }
-				else if(x == 2) {
-					adMobLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-                }
+                if(x == 0) 
+                	adLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+				else if(x == 1) 
+					adLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+				else if(x == 2) 
+					adLayoutParam.addRule(RelativeLayout.CENTER_HORIZONTAL);
 				
-				if(y == 0) {
-					adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
-				}
-				else if(y == 1) {
-					adMobLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-				}
-				else if(y == 2) {
-					adMobLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL);
-                }
+				if(y == 0) 
+					adLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+				else if(y == 1) 
+					adLayoutParam.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+				else if(y == 2) 
+					adLayoutParam.addRule(RelativeLayout.CENTER_VERTICAL);
 				
 				adInitialized = true;
 			}
@@ -259,7 +253,7 @@ public class Admob extends Extension {
 					if (adInitialized && !adVisible) {
 						adLayout.removeAllViews();
 						adView.setBackgroundColor(Color.BLACK);
-						adLayout.addView(adView, adMobLayoutParams);
+						adLayout.addView(adView, adLayoutParam);
 						adView.setBackgroundColor(0);
 						adVisible = true;
 					}
