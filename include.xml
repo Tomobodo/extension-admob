@@ -12,6 +12,6 @@
 	
 	<section if="android">
 		<dependency name="admob" path="dependencies/android"/>
-		<config:android extension="org.haxe.extension.Admob" />	
+		<android extension="org.haxe.extension.Admob" />	
 	</section>
 </project>

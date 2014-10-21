@@ -1,5 +1,6 @@
 package org.haxe.extension;
 
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,13 +9,10 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
-import com.google.ads.mediation.inmobi.InMobiAdapter;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
-import com.inmobi.commons.InMobi;
-import com.inmobi.commons.InMobi.LOG_LEVEL;
 
 /* 
 	You can use the Android Extension class in order to hook
@@ -121,7 +119,6 @@ public class Admob extends Extension {
 	 * to start interacting with the user.
 	 */
 	public void onResume () {
-		
 		if(!adLayoutAdded){
 			mainActivity.addContentView(adLayout, adMobLayoutParams);
 			adLayoutAdded = true;
@@ -324,16 +321,6 @@ public class Admob extends Extension {
     
     static public void setTestDevice(String hash) {
     	deviceHash = hash;
-    }
-    
-    static public void initInMobi(final String propertyID){
-    	Log.i("trace","INITIALIZING INMOBI");
-    	mainActivity.runOnUiThread( new Runnable() {
-    		public void run() {
-		    	InMobi.initialize(mainActivity, propertyID);
-		    	InMobi.setLogLevel(LOG_LEVEL.DEBUG);
-    		}
-    	});
     }
 	///////////////////////////////////////////////////////////////////////////////////////////	
 }
