@@ -8,6 +8,7 @@
 		<dependency name="MessageUI.framework"/>
 		<dependency name="StoreKit.framework"/>
 		<dependency name="SystemConfiguration.framework"/>
+        <dependency name="admob" path="dependencies/ios/libGoogleAdMobAds.a" />
 	</section>
 	
 	<section if="android">
