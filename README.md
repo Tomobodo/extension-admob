@@ -29,19 +29,8 @@ You'll need to include [google-play-services](https://github.com/TBaudon/google-
 
 **Prerequisites on iOS**
 
-1. Add following code to your project.xml 
-```xml
-<ios linker-flags="-force_load __PATH_TO_THE_HAXELIB_DIR__/admob/git/ndll/iPhone/libGoogleAdMobAds.a" />
-
-```
-don't forget to replace ```__PATH_TO_THE_HAXELIB_DIR__``` with real path to your haxelib, in most cases it will be ```/usr/lib/haxe/lib```
-
-2. After creating XCode project, drag libGoogleAdMobAds.a to Project Settings->Build Phases->Link with binaries
-3. (Optional) You can rebuild binaries on Mac OSX using five simple commands:
-```
-cd __PATH_TO_THE_HAXELIB_DIR__/admob/git/project
-haxelib run hxcpp Build.xml -Diphoneos
-haxelib run hxcpp Build.xml -Diphoneos -DHXCPP_ARMV7
-haxelib run hxcpp Build.xml -Diphonesim
-haxelib run hxcpp Build.xml
-```
+1. Build the ndll with the following command :
+2. ```
+3. lime rebuild admob ios
+4. ```
+5. That's it!
