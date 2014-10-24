@@ -30,7 +30,7 @@ You'll need to include [google-play-services](https://github.com/TBaudon/google-
 **Prerequisites on iOS**
 
 1. Build the ndll with the following command :
-2. ```
-3. lime rebuild admob ios
-4. ```
+```
+lime rebuild admob ios
+```
 5. That's it!
