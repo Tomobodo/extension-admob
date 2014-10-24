@@ -8,6 +8,8 @@
 		<dependency name="MessageUI.framework"/>
 		<dependency name="StoreKit.framework"/>
 		<dependency name="SystemConfiguration.framework"/>
+        <dependency name="EventKit.framework"/>
+        <dependency name="EventKitUI.framework" />
         <dependency name="admob" path="dependencies/ios/libGoogleAdMobAds.a" />
 	</section>
 	
