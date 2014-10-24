@@ -33,4 +33,4 @@ You'll need to include [google-play-services](https://github.com/TBaudon/google-
 ```
 lime rebuild admob ios
 ```
-5. That's it!
+That's it!
