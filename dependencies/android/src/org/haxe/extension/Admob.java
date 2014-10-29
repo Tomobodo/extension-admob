@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+
+import org.haxe.lime.HaxeObject;
 
 /* 
 	You can use the Android Extension class in order to hook
@@ -51,6 +54,9 @@ public class Admob extends Extension {
 	static InterstitialAd interstitial;
 	static String deviceHash;
 	static Boolean adLayoutAdded = false;
+	// listeners
+	static HaxeObject mIntersticialListener;
+	static String mInterstitialLoaded, mInterstitialError, mInterstitialClosed;
 	////////////////////////////////////////////////////////////////////////	
 	
 	/**
@@ -287,6 +293,13 @@ public class Admob extends Extension {
 		interstitial.loadAd(adRequest);
 	}
 	
+	static public void setInterstitialListeners(HaxeObject object, String onAdLoaded, String onAdFailed, String onAdClosed){
+		mIntersticialListener = object;
+		mInterstitialLoaded = onAdLoaded;
+		mInterstitialError = onAdFailed;
+		mInterstitialClosed = onAdClosed;
+	}
+	
 	static public void initInterstitial(final String id, final boolean testMode) {
         mainActivity.runOnUiThread(new Runnable() {
             public void run() {
@@ -297,6 +310,24 @@ public class Admob extends Extension {
 				
                 interstitial = new InterstitialAd(mainActivity);
                 interstitial.setAdUnitId(id);
+                interstitial.setAdListener(new AdListener() {
+                	
+                	public void onAdLoaded(){
+                		if(mIntersticialListener != null && mInterstitialLoaded != null)
+                			mIntersticialListener.call0(mInterstitialLoaded);
+                	}
+                	
+                	public void onAdFailedToLoad(int errorCode){
+                		if(mIntersticialListener != null && mInterstitialError != null)
+                			mIntersticialListener.call1(mInterstitialError, errorCode);
+                	}
+                	
+                	public void onAdClosed(){
+                		if(mIntersticialListener != null && mInterstitialClosed != null)
+                			mIntersticialListener.call0(mInterstitialClosed);
+                	}
+                	
+				});
 
                 loadInterstitial();
             }
@@ -311,6 +342,18 @@ public class Admob extends Extension {
                 }
             }
         });
+    }
+    
+    static public void onIntersticialLoaded(){
+    	
+    }
+    
+    static public void onIntersticialLoadError(){
+    	
+    }
+    
+    static public void onIntersticialClosed(){
+    	
     }
     
     static public void setTestDevice(String hash) {

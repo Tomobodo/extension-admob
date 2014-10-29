@@ -1,4 +1,5 @@
 package admob;
+import openfl.utils.JNI;
 
 class AD {
 	// POSITIONS
@@ -27,7 +28,7 @@ class AD {
 	private static var _initInterstitial_func : Dynamic;
 	private static var _showInterstitial_func : Dynamic;
 	private static var _setTestDevice_func : Dynamic;
-
+	private static var _setInterstitialListeners_func : Dynamic;
 	
 	public static function init(id : String, x : Int = 0, y : Int = 0, size : Int = 0, test : Bool = false) {
 		admobID = id;
@@ -95,6 +96,14 @@ class AD {
 		}
 
 		_showInterstitial_func(new Array<Dynamic>());
+	}
+	
+	public static function setInterstitialListeners(handler : Dynamic, onAdLoaded : String = null, onAdFailed : String = null, onAdClosed : String = null) {
+		if (_setInterstitialListeners_func == null) {
+			_setInterstitialListeners_func = JNI.createStaticMethod(
+				"org.haxe.extension.Admob", "setInterstitialListeners", "(Lorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V");
+		}
+		_setInterstitialListeners_func(handler, onAdLoaded, onAdFailed, onAdClosed);
 	}
 	
 	public static function setTestDevice(deviceHash : String) {
