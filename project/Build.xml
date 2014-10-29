@@ -43,12 +43,12 @@
 	  <file name="common/ExternalInterface.cpp"/>
 	</files>
 
-	<lib name="../ndll/iPhone/libGoogleAdMobAds.a" if="iphone"/>
+	<lib name="../dependencies/ios/libGoogleAdMobAds.a" if="iphone"/>
 
-	<target id="NDLL" output="admob${name_extra}" tool="linker" toolid="${ndll-tool}">
+	<target id="NDLL" output="libadmob${name_extra}" tool="linker" toolid="${ndll-tool}">
 
 	  <outdir name="../ndll/${BINDIR}"/>
-	  <files id="iphone"if="iphone" />
+	  <files id="iphone" if="iphone" />
 	  <files id="common"/>
 
 	</target>
