@@ -147,12 +147,32 @@ class AD {
 		admob_ad_show_interstitial();
 	}
 
+	public static function setInterstitialListeners(handler : Dynamic, onAdLoaded : String = null, onAdFailed : String = null, onAdClosed : String = null) {
+        var onAdLoadedMethod : Dynamic = null;
+        var onAdFailedMethod : Dynamic = null;
+        var onAdClosedMethod : Dynamic = null;
+
+        if(onAdLoaded != null)
+            onAdLoadedMethod = Reflect.field(handler, onAdLoaded);
+        if(onAdFailed != null)
+            onAdFailedMethod = Reflect.field(handler, onAdFailed);
+        if(onAdClosed != null)
+            onAdClosedMethod = Reflect.field(handler, onAdClosed);
+
+        admob_ad_set_interstitial_listeners(onAdLoadedMethod, onAdFailedMethod, onAdClosedMethod);
+	}
+
+	public static function setTestDevice(deviceHash : String) {
+
+	}
+
 	private static var admob_ad_init = flash.Lib.load("admob", "admob_ad_init", 5);
 	private static var admob_ad_show = flash.Lib.load("admob", "admob_ad_show", 0);
 	private static var admob_ad_hide = flash.Lib.load("admob", "admob_ad_hide", 0);
 	private static var admob_ad_refresh = flash.Lib.load("admob", "admob_ad_refresh", 0);
 	private static var admob_ad_init_interstitial = flash.Lib.load("admob", "admob_ad_init_interstitial", 2);
 	private static var admob_ad_show_interstitial = flash.Lib.load("admob", "admob_ad_show_interstitial", 0);
+	private static var admob_ad_set_interstitial_listeners = flash.Lib.load("admob", "admob_ad_set_interstitial_listeners", 3);
 
 #else
 	public static function init(id : String, x : Int = 0, y : Int = 0, size : Int = 0, test : Bool = false) {
@@ -167,5 +187,9 @@ class AD {
 	}
 	public static function showInterstitial() : Void {
 	}
+    public static function setInterstitialListeners(handler : Dynamic, onAdLoaded : String = null, onAdFailed : String = null, onAdClosed : String = null) {
+    }
+    public static function setTestDevice(deviceHash : String) {
+    }
 #end
 }

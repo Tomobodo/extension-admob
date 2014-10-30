@@ -3,6 +3,38 @@
 #import <GADBannerView.h>
 #import <GADInterstitial.h>
 
+extern "C"{
+    void onAdLoaded();
+    void onAdFailed(int errorCode);
+    void onAdClosed();
+}
+
+@interface InterstitialDelegate : NSObject
+- (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial;
+- (void)interstitial:(GADInterstitial *)interstitial didFailToReceiveAdWithError:(GADRequestError *)error;
+- (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial;
+@end
+
+@implementation InterstitialDelegate
+
+- (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial {
+    NSLog(@"Ad received");
+    onAdLoaded();
+}
+
+- (void)interstitial:(GADInterstitial *)interstitial didFailToReceiveAdWithError:(GADRequestError *)error {
+    NSLog(@"Ad error %@", [error description]);
+    NSInteger errorCode = [error code];
+    onAdFailed(errorCode);
+}
+
+- (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial{
+    NSLog(@"Ad closed");
+    onAdClosed();
+}
+
+@end
+
 namespace admobIOS {
 
     static GADBannerView *bannerView_;
@@ -11,6 +43,7 @@ namespace admobIOS {
     
     static GADInterstitial *interstitial_;
     static bool testInterstitial;
+    static InterstitialDelegate *mInterstitialDelegate;
 	
 	void initAd(const char *ID, int x, int y, int size, bool testMode) {
 		testAds = testMode;
@@ -18,12 +51,24 @@ namespace admobIOS {
 		
 		NSString *GADID = [[NSString alloc] initWithUTF8String: ID];
 
-		if (size == 0) {
-			bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeSmartBannerPortrait];
-		}
-		else if (size == 1) {
-			bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeSmartBannerLandscape];
-		}
+		if (size == 0)
+			bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeBanner];
+		if (size == 1)
+			bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeFullBanner];
+        if (size == 2)
+            bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeLargeBanner];
+        if (size == 3)
+            bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeLeaderboard];
+        if (size == 4)
+            bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeMediumRectangle];
+        if (size == 5){
+            UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+            if(UIDeviceOrientationIsLandscape(orientation))
+                bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeSmartBannerLandscape];
+            else
+                bannerView_ = [[GADBannerView alloc] initWithAdSize : kGADAdSizeSmartBannerPortrait];
+        }
+		
 		
 		int xPos = 0;
 		int yPos = 0;
@@ -82,6 +127,11 @@ namespace admobIOS {
         
         interstitial_ = [[GADInterstitial alloc] init];
         interstitial_.adUnitID = GADID;
+        
+        if(mInterstitialDelegate == NULL)
+            mInterstitialDelegate = [[InterstitialDelegate alloc] init];
+        interstitial_.delegate = mInterstitialDelegate;
+        
 		//interstitial_.rootViewController = rootView;
         
 		GADRequest *request = [[GADRequest alloc] init];
