@@ -1,5 +1,5 @@
 Google AdMob extension for OpenFL applications. 
-Working on both Android and iOS (iOs is broken at the moment on this fork, will soon work on it). 
+Working on both Android and iOS. 
 Code is heavily based on NMEX extension which is pretty much outdated right now.
 
 **Instructions**
@@ -21,11 +21,39 @@ where arguments are following:
   - Test mode. Whether enable test ads or not. Default value is false.
 6. Show banner ```AD.show(); ```
 7. You can hide it anytime by calling ```AD.hide();```
-8. Use AD.setTestDevice("YOUR_DEVICE_HASH") if you want to use test ad on android devices (plus setting testMode to true in init functions)
+8. You can connect callBack to the following interstitial events : 
+      - Ad received
+      - Ad error
+      - Ad closed
+   
+   with the following code :
+   ```
+   class Main extends Sprite(){
+      public function new(){
+        super();
+        AD.setInterstitialListeners(this, "onAdLoaded", "onAdFailed", "onAdClosed");
+        AD.initInterstitial("xxxxxxx");
+      }
+      
+      function onAdLoaded(){
+        AD.showInterstitial();
+      }
+      
+      function onAdFailed(errorCode : Int){
+        trace("Error " + errorCode+ " occured.");
+      }
+      
+      function onAdClosed(){
+        continueGame();
+      }
+    }
+   ```
  
 **Prerequisites on Android**
 
 You'll need to include [google-play-services](https://github.com/TBaudon/google-play-services-openfl) haxelib in your project BEFORE admob.
+
+Use AD.setTestDevice("YOUR_DEVICE_HASH") if you want to use test ad on android devices (plus setting testMode to true in init functions)
 
 **Prerequisites on iOS**
 
