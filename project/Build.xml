@@ -34,6 +34,7 @@
 	  <depend name="${HXCPP}/include/hx/Macros.h"/>
 	  <depend name="${HXCPP}/include/hx/CFFI.h"/>
 	  <compilerflag value="-IiPhone/include"/>
+      <compilerflag value="-IiPhone/include/inmobi"/>
 	  <compilerflag value="-Iinclude"/>
 	  <file name="iphone/GAD.mm" />
 	</files>
@@ -44,6 +45,8 @@
 	</files>
 
 	<lib name="../dependencies/ios/libGoogleAdMobAds.a" if="iphone"/>
+    <lib name="../dependencies/ios/libInMobi-4.5.1.a" if="iphone" />
+    <lib name="../dependencies/ios/libAdapterInMobi.a" if="iphone" />
 
 	<target id="NDLL" output="libadmob${name_extra}" tool="linker" toolid="${ndll-tool}">
 

@@ -18,7 +18,7 @@ extern "C"{
 @implementation InterstitialDelegate
 
 - (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial {
-    NSLog(@"Ad received");
+    NSLog(@"Ad received from %@ ", interstitial.adNetworkClassName);
     onAdLoaded();
 }
 
