@@ -1,3 +1,5 @@
+Forked from https://github.com/mkorman9/admob-openfl 
+
 Google AdMob extension for OpenFL applications. 
 Working on both Android and iOS. 
 Code is heavily based on NMEX extension which is pretty much outdated right now.
