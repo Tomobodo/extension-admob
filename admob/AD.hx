@@ -105,6 +105,10 @@ class AD {
 		}
 		_setInterstitialListeners_func(handler, onAdLoaded, onAdFailed, onAdClosed);
 	}
+
+	public static function removeInterstitialListeners(handler : Dynamic){
+		setInterstitialListeners(handler, null, null, null);
+	}
 	
 	public static function setTestDevice(deviceHash : String) {
 		if (_setTestDevice_func == null) 
@@ -164,6 +168,22 @@ class AD {
 
 	public static function setTestDevice(deviceHash : String) {
 
+	}
+
+	public static function removeInterstitialListeners(handler : Dynamic){
+		admob_ad_set_interstitial_listeners(unhandledLoadedEvent, unhandledFailedEvent, unhandledClosedEvent);
+	}
+
+	static function unhandledLoadedEvent(){
+		trace("unhandledLoadedEvent");
+	}
+
+	static function unhandledFailedEvent(){
+		trace("unhandledFailedEvent");
+	}
+
+	static function unhandledClosedEvent(){
+		trace("unhandedClosedEvent");
 	}
 
 	private static var admob_ad_init = flash.Lib.load("admob", "admob_ad_init", 5);
